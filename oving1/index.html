@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Øving 1</title>
+    <script src="./script.js"; defer></script>
+    <link rel="stylesheet" href="site.css" type="text/css" />
+    <style>
+      
+
+      h2 {
+        font-size: 2em;
+        margin-top: 0.4em;
+      }
+
+    </style>
+  </head>
+  <body>
+      <ul class="menu">
+        <li>Home</li>
+        <li onclick="changeColor()">Page 2</li>
+        <li>Page 3</li>
+      </ul>
+
+      <div class="header">
+          <img src="images/ntnu.png" alt="NTNU logo">
+          <h1>Øving 1</h1>
+      </div>
+
+      <div class="content">
+        <div>
+          <h2>Oppgave 1</h2>
+          <p>
+            Dett er tekst til deloppgave 1.
+          </p>
+        </div>
+
+        <div>
+          <h2>Oppgave 2</h2>
+          <p>
+            Ikke trykk på knapp 2.
+          </p>
+          <p id="demo">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In hendrerit suscipit dapibus. 
+            Vivamus id tellus nec diam pellentesque dictum. Maecenas tempus diam a magna gravida, in vestibulum dui viverra.
+          </p>
+          <p id="number">
+            0
+          </p>
+          <div id="stikkord-container">
+            
+          </div>
+          
+         
+          <ul class="button-container">
+            <li onclick="fillList()">Knapp 1</li>
+            <li onclick="changeVisibility()">Knapp 2</li>
+            <li onclick="incrementNumber()">Knapp 3</li>
+          </ul>
+          
+        </div>
+    
+      </div>
+      
+      <div class="footer">
+          Copyright &copy; 2023 Edvard Schøyen
+      </div>
+  </body>
+</html>
