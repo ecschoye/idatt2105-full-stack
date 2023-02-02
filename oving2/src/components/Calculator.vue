@@ -16,8 +16,9 @@
         </div>
     </div>
     <div class="p-3 text-center log">
-        <!--<p class="rounded">Calculator log:</p>-->
-        <div class="text-white rounded">Calculator log</div>
+        <div class="text-white rounded">
+            <p v-show="action">Calculator log</p>
+        </div>
         <span style="white-space: pre-line">{{ resultLog }}</span>
         
     </div>
