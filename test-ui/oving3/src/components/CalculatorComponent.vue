@@ -11,10 +11,10 @@
         <div class="buttons">
           <div class="row" v-for="n in calculatorElements" v-bind:key="n">
             <div
-              class="text-white bg-vue-dark button"
+              class="text-white bg-vue-dark button bold"
               :class="{
                 'bg-vue-orange': ['/', '*', '-', '+', '='].includes(n),
-                'text-black': ['AC', '+/-', '%'].includes(n),
+                'bg-vue-gray text-black': ['AC', '+/-', '%'].includes(n),
               }"
               @click="action(n)"
             >
@@ -25,11 +25,21 @@
       </div>
     </div>
   </div>
+  <div v-if="showLog" class="log-container">
+    <h2>Calculation Log in CalcCom</h2>
+    <div class="log">{{ resultLog }}</div>
+  </div>
+  <LogComponent :result-log="resultLog" />
 </template>
 
 <script>
+import LogComponent from "./LogComponent.vue";
+
 export default {
   name: "CalculatorComponent",
+  components: {
+    LogComponent,
+  },
   props: {
     msg: String,
   },
@@ -61,6 +71,8 @@ export default {
       operator: null,
       prevCalculatorValue: "",
       resultLog: "",
+      showLog: false,
+      calculationLog: [],
     };
   },
   methods: {
@@ -76,7 +88,6 @@ export default {
     handleAc() {
       this.calculatorValue = "";
       this.prevCalculatorValue = "";
-      this.resultLog = "";
     },
     handlePercent() {
       this.calculatorValue = this.calculatorValue / 100 + "";
@@ -120,6 +131,8 @@ export default {
         this.calculatorValue += "";
         this.prevCalculatorValue = "";
         this.operator = null;
+        this.showLog = true;
+        //this.$refs.log.resultLog.push(this.resultLog + "\n");
       }
     },
     action(n) {
@@ -239,5 +252,27 @@ export default {
 .bg-vue-dark[class*="bg-vue-gray"],
 .bg-vue-gray[class*="bg-vue-dark"] {
   background-color: lightgray;
+}
+
+.log-container {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.log-container,
+h2 {
+  font-family: "Courier New", Courier, monospace;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.log {
+  background-color: lightblue;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 400px;
+  margin: 0 auto;
 }
 </style>

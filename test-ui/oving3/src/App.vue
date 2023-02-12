@@ -39,7 +39,7 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #4082ad;
 }
 
 ul {
@@ -58,5 +58,7 @@ li {
   list-style: none;
   margin: 10px;
   padding: 5px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 30px;
 }
 </style>
