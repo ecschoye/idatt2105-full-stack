@@ -26,20 +26,18 @@
     </div>
   </div>
   <div v-if="showLog" class="log-container">
-    <h2>Calculation Log in CalcCom</h2>
-    <div class="log">{{ resultLog }}</div>
+    <h2>Calculation Log</h2>
+    <div class="log" style="max-height: 200px; overflow: auto">
+      <p v-for="(result, index) in resultLog.slice(-10)" :key="index">
+        {{ result }}
+      </p>
+    </div>
   </div>
-  <LogComponent :result-log="resultLog" />
 </template>
 
 <script>
-import LogComponent from "./LogComponent.vue";
-
 export default {
   name: "CalculatorComponent",
-  components: {
-    LogComponent,
-  },
   props: {
     msg: String,
   },
@@ -70,7 +68,7 @@ export default {
       ],
       operator: null,
       prevCalculatorValue: "",
-      resultLog: "",
+      resultLog: [],
       showLog: false,
       calculationLog: [],
     };
@@ -116,25 +114,17 @@ export default {
       ) {
         alert("You have to choose a number");
       } else {
-        this.resultLog +=
-          this.prevCalculatorValue +
-          " " +
-          this.operator +
-          " " +
-          this.calculatorValue +
-          " = ";
-        this.calculatorValue = eval(
-          this.prevCalculatorValue + this.operator + this.calculatorValue
-        );
-        this.calculatorValue = this.calculatorValue.toFixed(2);
-        this.resultLog += this.calculatorValue + "\n";
-        this.calculatorValue += "";
+        const expression = `${this.prevCalculatorValue} ${this.operator} ${this.calculatorValue}`;
+        const result = eval(expression).toFixed(2);
+        const calculation = `${expression} = ${result}`;
+        this.resultLog.push(calculation);
+        this.calculatorValue = result;
         this.prevCalculatorValue = "";
         this.operator = null;
         this.showLog = true;
-        //this.$refs.log.resultLog.push(this.resultLog + "\n");
       }
     },
+
     action(n) {
       if (!isNaN(n) || n === ".") {
         this.handleNumberInput(n);
@@ -274,5 +264,19 @@ h2 {
   border-radius: 10px;
   max-width: 400px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.log::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+.log::-webkit-scrollbar-thumb {
+  background-color: rgba(169, 169, 169, 0);
+}
+
+.log::-webkit-scrollbar-track {
+  display: none;
 }
 </style>
