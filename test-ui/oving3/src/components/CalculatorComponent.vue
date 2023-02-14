@@ -27,9 +27,13 @@
   </div>
   <div v-if="showLog" class="log-container">
     <h2>Calculation Log</h2>
-    <div class="log" style="max-height: 200px; overflow: auto">
-      <p v-for="(result, index) in resultLog.slice(-10)" :key="index">
-        {{ result }}
+    <div class="log">
+      <p
+        v-for="(result, index) in resultLog.slice(-10)"
+        :key="index"
+        class="log-item"
+      >
+        <span class="log-index">{{ index + 1 }}. </span>{{ result }}
       </p>
     </div>
   </div>
@@ -247,6 +251,7 @@ export default {
 .log-container {
   margin-top: 25px;
   text-align: center;
+  padding: 0 20px;
 }
 
 .log-container,
@@ -266,17 +271,47 @@ h2 {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 200px;
+}
+
+.log p {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 18px;
 }
 
 .log::-webkit-scrollbar {
-  width: 0.5em;
+  width: 10px;
+  height: 10px;
 }
 
 .log::-webkit-scrollbar-thumb {
-  background-color: rgba(169, 169, 169, 0);
+  background-color: #9f72457d;
+  border-radius: 0 45px 45px 0;
+}
+
+.log::-webkit-scrollbar-thumb:hover {
+  background-color: #9f7245;
 }
 
 .log::-webkit-scrollbar-track {
   display: none;
+}
+
+.log-item {
+  margin: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.log-index {
+  font-weight: bold;
+  margin-right: 10px;
+  text-align: right;
+  width: 20px;
 }
 </style>
