@@ -16,7 +16,7 @@ h1 {
   padding-top: 20px;
   font-family: "Courier New", Courier, monospace;
   font-size: 10px;
-  background-color: lightblue;
+  background-color: #dfbf9f;
   max-width: 550px;
   max-height: 200px;
   margin: 50px auto;

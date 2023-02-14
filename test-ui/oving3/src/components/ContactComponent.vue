@@ -34,13 +34,15 @@
         ></textarea>
       </div>
       <div class="form-group">
-        <button
-          type="submit"
-          class="btn btn-primary"
-          @click.prevent="submitForm"
-        >
-          Submit
-        </button>
+        <div class="button">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            @click.prevent="submitForm"
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </form>
   </div>
@@ -89,7 +91,7 @@ export default {
   max-width: 700px;
   width: 100%;
   max-height: 500px;
-  background: lightblue;
+  background: #dfbf9f;
   padding: 20px;
   border-radius: 20px;
   margin: 50px auto;
@@ -120,12 +122,16 @@ textarea {
   height: 75px;
 }
 
+.button {
+  color: #4d3319;
+}
+
 button[type="submit"] {
   width: 100%;
   padding: 10px;
   margin-top: 20px;
-  background-color: rgb(120, 176, 237);
-  color: white;
+  background-color: #cc9966;
+  color: #4d3319;
   border: none;
   border-radius: 5px;
   font-weight: bold;

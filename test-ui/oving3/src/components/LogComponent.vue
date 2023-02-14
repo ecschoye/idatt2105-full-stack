@@ -34,7 +34,7 @@ h2 {
 }
 
 .log {
-  background-color: lightblue;
+  background-color: #dfbf9f;
   padding: 10px;
   border-radius: 10px;
   max-width: 400px;

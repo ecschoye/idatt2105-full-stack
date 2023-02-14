@@ -163,7 +163,7 @@ export default {
 }
 
 .calculator-background {
-  background-color: lightblue;
+  background-color: #dfbf9f;
   border-radius: 30px;
   padding: 30px;
   width: 500px;
@@ -181,7 +181,7 @@ export default {
   grid-template-rows: auto 1fr;
   grid-template-areas: "title title title title" "display display display display" "buttons buttons buttons buttons";
   gap: 5px;
-  background-color: lightblue;
+  background-color: #dfbf9f;
 }
 
 .title {
@@ -269,7 +269,7 @@ h2 {
 }
 
 .log {
-  background-color: lightblue;
+  background-color: #dfbf9f;
   padding: 10px;
   border-radius: 10px;
   max-width: 400px;

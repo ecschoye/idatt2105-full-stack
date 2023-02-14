@@ -26,7 +26,7 @@ nav {
   align-self: center;
   align-items: center;
   justify-content: center;
-  background: lightblue;
+  background: #dfbf9f;
   height: 50px;
   min-width: 50%;
   margin-top: 5px;
@@ -35,11 +35,11 @@ nav {
 
 nav a {
   font-weight: bold;
-  color: #36495c;
+  color: #cc9966;
 }
 
 nav a.router-link-exact-active {
-  color: #4082ad;
+  color: #c68c53;
 }
 
 ul {
