@@ -50,6 +50,7 @@
             Submit
           </button>
         </div>
+        <div class="success-text" v-if="success">{{ successText }}</div>
       </div>
     </form>
   </div>
@@ -60,7 +61,7 @@ import axios from "axios";
 
 var validEmailRegex =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{1,})$/;
-var validNameRegex = /^[a-zA-Z]+$/;
+var validNameRegex = /^[a-zA-Z -]+$/;
 
 export default {
   data() {
@@ -70,6 +71,8 @@ export default {
         email: "",
         feedback: "",
       },
+      success: false,
+      successText: "Success!",
     };
   },
   methods: {
@@ -85,6 +88,10 @@ export default {
           this.formData.name = "";
           this.formData.email = "";
           this.formData.feedback = "";
+          this.success = true;
+          setTimeout(() => {
+            this.success = false;
+          }, 3000);
         })
         .catch(() => {
           alert("Something went wrong");
@@ -143,10 +150,12 @@ export default {
   max-width: 700px;
   width: 100%;
   max-height: 500px;
+  height: 500px;
   background: #dfbf9f;
   padding: 20px;
   border-radius: 20px;
   margin: 50px auto;
+  overflow: auto;
 }
 
 .form-group {
@@ -194,5 +203,15 @@ button[type="submit"] {
   opacity: 0.1;
   cursor: not-allowed;
   pointer-events: none;
+}
+.success-text {
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+  margin-top: 20px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
 }
 </style>
