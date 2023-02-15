@@ -3,7 +3,7 @@
     <div class="title">
       <h2>Form</h2>
     </div>
-    <form @submit.prevent = "submitForm">
+    <form @submit.prevent="submitForm">
       <div class="form-group">
         <label for="name">Name</label>
         <input
@@ -51,6 +51,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 var validRegex =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 export default {
