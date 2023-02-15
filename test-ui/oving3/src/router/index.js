@@ -19,12 +19,6 @@ const routes = [
     name: "contact",
     component: ContactView,
   },
-  {
-    path: "/about",
-    name: "about",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-  },
 ];
 
 const router = createRouter({

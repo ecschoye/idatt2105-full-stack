@@ -3,12 +3,13 @@
     <div class="title">
       <h2>Form</h2>
     </div>
-    <form>
+    <form @submit.prevent = "submitForm">
       <div class="form-group">
         <label for="name">Name</label>
         <input
           type="text"
           id="name"
+          placeholder="Ola Olsen"
           class="form-control"
           v-model="name"
           required
@@ -19,6 +20,7 @@
         <input
           type="email"
           id="email"
+          placeholder="ola@olsen.com"
           class="form-control"
           v-model="email"
           required
@@ -29,6 +31,7 @@
         <textarea
           id="feedback"
           class="form-control"
+          placeholder="Jeg synes ..."
           v-model="feedback"
           required
         ></textarea>
