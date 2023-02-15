@@ -1,7 +1,22 @@
 {
-    "form": {
-      "name": "Ola Olsen",
-      "mail": "ola@olsen.no",
-      "message": "message"
+  "form": [
+    {
+      "name": "Edvard",
+      "email": "edvard@gmail.com",
+      "feedback": "Denne er nice.",
+      "id": 0
+    },
+    {
+      "name": "Test",
+      "email": "test@mail.mail",
+      "feedback": "feedback",
+      "id": 1
+    },
+    {
+      "name": "testbruker",
+      "email": "testbruker@mail.com",
+      "feedback": "Jeg er en testbruker",
+      "id": 2
     }
-  }
+  ]
+}

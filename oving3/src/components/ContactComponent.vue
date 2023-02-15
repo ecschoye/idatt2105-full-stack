@@ -9,9 +9,10 @@
         <input
           type="text"
           id="name"
-          placeholder="Ola Olsen"
+          placeholder="Name"
           class="form-control"
-          v-model="name"
+          v-model="formData.name"
+          @input="updateName"
           required
         />
       </div>
@@ -20,9 +21,10 @@
         <input
           type="email"
           id="email"
-          placeholder="ola@olsen.com"
+          placeholder="E-mail"
           class="form-control"
-          v-model="email"
+          v-model="formData.email"
+          @input="updateEmail"
           required
         />
       </div>
@@ -31,8 +33,8 @@
         <textarea
           id="feedback"
           class="form-control"
-          placeholder="Jeg synes ..."
-          v-model="feedback"
+          placeholder="Feedback"
+          v-model="formData.feedback"
           required
         ></textarea>
       </div>
@@ -41,6 +43,8 @@
           <button
             type="submit"
             class="btn btn-primary"
+            :disabled="isFormIncomplete"
+            :class="{ disabled: isFormIncomplete }"
             @click.prevent="submitForm"
           >
             Submit
@@ -50,37 +54,81 @@
     </form>
   </div>
 </template>
+
 <script>
-import axios from 'axios'
-var validRegex =
-  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+import axios from "axios";
+
+var validEmailRegex =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{1,})$/;
+var validNameRegex = /^[a-zA-Z]+$/;
+
 export default {
   data() {
     return {
-      name: "",
-      email: "",
-      feedback: "",
+      formData: {
+        name: "",
+        email: "",
+        feedback: "",
+      },
     };
   },
   methods: {
-    submitForm() {
-      if (this.name === "" || this.email === "" || this.feedback === "") {
-        alert("Please fill out all fields");
-      } else if (!validRegex.test(this.email)) {
-        alert("Please enter a valid email");
-      } else {
-        alert(
-          "Form submitted successfully!\nName: " +
-            this.name +
-            "\nEmail: " +
-            this.email +
-            "\nFeedback: " +
-            this.feedback
-        );
-        this.name = "";
-        this.email = "";
-        this.feedback = "";
-      }
+    getData() {
+      this.$store.commit("SET_NAME", this.formData.name);
+      this.$store.commit("SET_EMAIL", this.formData.email);
+    },
+    async submitForm() {
+      this.getData();
+      axios
+        .post("http://localhost:3000/form", this.formData)
+        .then(() => {
+          this.formData.name = "";
+          this.formData.email = "";
+          this.formData.feedback = "";
+        })
+        .catch(() => {
+          alert("Something went wrong");
+        });
+    },
+
+    updateName(event) {
+      this.$store.commit("SET_NAME", event.target.value);
+    },
+    updateEmail(event) {
+      this.$store.commit("SET_EMAIL", event.target.value);
+    },
+
+    validForm() {
+      return (
+        this.validateName() && this.validateEmail() && this.validateFeedback()
+      );
+    },
+
+    validateName() {
+      return validNameRegex.test(this.formData.name);
+    },
+
+    validateEmail() {
+      return validEmailRegex.test(this.email);
+    },
+
+    validateFeedback() {
+      return this.feedback.length > 0 && !this.isOnlyWhitespace(this.feedback);
+    },
+
+    isOnlyWhitespace(str) {
+      return str.trim().length === 0;
+    },
+  },
+  computed: {
+    isFormIncomplete() {
+      return (
+        !this.formData.name ||
+        !this.formData.email ||
+        !this.formData.feedback ||
+        !validEmailRegex.test(this.formData.email) ||
+        !validNameRegex.test(this.formData.name)
+      );
     },
   },
 };
@@ -140,5 +188,11 @@ button[type="submit"] {
   border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
+}
+
+.disabled {
+  opacity: 0.1;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 </style>
