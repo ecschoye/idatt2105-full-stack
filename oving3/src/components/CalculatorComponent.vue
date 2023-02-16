@@ -13,13 +13,13 @@
             <div
               class="text-white bg-vue-dark button bold"
               :class="{
-                'bg-vue-orange': ['/', '*', '-', '+', '='].includes(n),
-                'bg-vue-gray text-black': ['AC', '+/-', '%'].includes(n),
+                'bg-vue-orange': ['/', '*', '-', '+', '='].includes(n.value),
+                'bg-vue-gray text-black': ['AC', '+/-', '%'].includes(n.value),
               }"
-              @click="action(n)"
-              :id="`button-${n}`"
+              @click="action(n.value)"
+              :id="`button-${n.name}`"
             >
-              {{ n }}
+              {{ n.value }}
             </div>
           </div>
         </div>
@@ -32,6 +32,7 @@
       <p
         v-for="(result, index) in resultLog.slice(-10)"
         :key="index"
+        :id="'log-item-' + index"
         class="log-item"
       >
         <span class="log-index">{{ index + 1 }}. </span>{{ result }}
@@ -50,27 +51,28 @@ export default {
     return {
       calculatorValue: "",
       calculatorElements: [
-        "AC",
-        "+/-",
-        "%",
-        "/",
-        7,
-        8,
-        9,
-        "*",
-        4,
-        5,
-        6,
-        "-",
-        1,
-        2,
-        3,
-        "+",
-        0,
-        ".",
-        "√",
-        "=",
+        { name: "AC", value: "AC" },
+        { name: "sign-change", value: "+/-" },
+        { name: "percentage", value: "%" },
+        { name: "divide", value: "/" },
+        { name: "7", value: 7 },
+        { name: "8", value: 8 },
+        { name: "9", value: 9 },
+        { name: "multiply", value: "*" },
+        { name: "4", value: 4 },
+        { name: "5", value: 5 },
+        { name: "6", value: 6 },
+        { name: "subtract", value: "-" },
+        { name: "1", value: 1 },
+        { name: "2", value: 2 },
+        { name: "3", value: 3 },
+        { name: "add", value: "+" },
+        { name: "0", value: 0 },
+        { name: "comma", value: "." },
+        { name: "square-root", value: "√" },
+        { name: "equals", value: "=" },
       ],
+
       operator: null,
       prevCalculatorValue: "",
       resultLog: [],

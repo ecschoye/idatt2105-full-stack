@@ -11,10 +11,10 @@ describe("Can not submit form", () => {
   it("Visits the app root url", () => {
     cy.visit("http://192.168.0.182:8080/#/contact");
     cy.contains("h2", "Form");
-    cy.get("#name").should("have.value","");
-    cy.get("#email").should("have.value","");
-    cy.get("#feedback").should("have.value","");
-    cy.get("#submitBtn").should('be.disabled');
+    cy.get("#name").should("have.value", "");
+    cy.get("#email").should("have.value", "");
+    cy.get("#feedback").should("have.value", "");
+    cy.get("#submitBtn").should("be.disabled");
   });
 });
 
@@ -30,5 +30,3 @@ describe("Fill out form and submit", () => {
     cy.get("#successId").contains("Success!");
   });
 });
-
-
