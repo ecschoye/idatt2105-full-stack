@@ -42,6 +42,7 @@
         <div class="button">
           <button
             type="submit"
+            id="submitBtn"
             class="btn btn-primary"
             :disabled="isFormIncomplete"
             :class="{ disabled: isFormIncomplete }"
@@ -50,7 +51,9 @@
             Submit
           </button>
         </div>
-        <div class="success-text" v-if="success">{{ successText }}</div>
+        <div class="success-text" id="successId" v-if="success">
+          {{ successText }}
+        </div>
       </div>
     </form>
   </div>
@@ -91,7 +94,7 @@ export default {
           this.success = true;
           setTimeout(() => {
             this.success = false;
-          }, 3000);
+          }, 5000);
         })
         .catch(() => {
           alert("Something went wrong");

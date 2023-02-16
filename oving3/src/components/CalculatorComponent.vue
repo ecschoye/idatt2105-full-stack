@@ -5,7 +5,7 @@
         <div class="title">
           <h1>Calculator</h1>
         </div>
-        <div class="display">
+        <div class="display" id="result">
           {{ calculatorValue || 0 }}
         </div>
         <div class="buttons">
@@ -17,6 +17,7 @@
                 'bg-vue-gray text-black': ['AC', '+/-', '%'].includes(n),
               }"
               @click="action(n)"
+              :id="`button-${n}`"
             >
               {{ n }}
             </div>
