@@ -16,7 +16,7 @@ test("Test that numbers get entered", async () => {
   expect(result.text()).not.toBe("472");
 });
 
-test("Get operator", async () => {
+test("Do operation", async () => {
   const wrapper = mount(CalculatorComponent);
   const button7 = wrapper.find("#button-7");
   await button7.trigger("click");

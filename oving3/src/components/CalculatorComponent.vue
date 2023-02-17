@@ -212,9 +212,9 @@ export default {
 
 .button {
   width: 100%;
-  height: 35px; /* increased height */
+  height: 35px;
   border-radius: 10px;
-  padding-top: 15px; /* added padding-top */
+  padding-top: 15px;
 }
 
 .buttons .button {
