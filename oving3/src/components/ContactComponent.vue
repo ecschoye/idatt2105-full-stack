@@ -141,6 +141,10 @@ export default {
       );
     },
   },
+  created() {
+    this.formData.name = this.$store.state.name;
+    this.formData.email = this.$store.state.email;
+  },
 };
 </script>
 <style scoped>
