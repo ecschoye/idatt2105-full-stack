@@ -25,11 +25,6 @@ public class CalculatorService {
                 throw new IllegalArgumentException("Invalid operator: " + equation.getOperator());
             }
         }
-        logger.info("Calculated " + equation.toString() + " = " + result);
-        return result;
-    }
-
-    public double getResult() {
         return result;
     }
 

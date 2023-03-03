@@ -27,7 +27,6 @@ public class CalculatorController {
         logger.info("Received request to calculate equation: " + equation.toString());
         double result = calculatorService.calculate(equation);
         logger.info("Calculated equation: " + equation + " = " + result);
-        System.out.println("Calculated equation: " + equation+ " = " + result);
         return Double.toString(result);
     }
 }
