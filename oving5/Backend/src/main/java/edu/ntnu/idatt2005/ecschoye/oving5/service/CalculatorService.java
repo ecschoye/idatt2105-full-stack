@@ -1,6 +1,6 @@
-package edu.ntnu.idatt2005.ecschoye.oving4.service;
+package edu.ntnu.idatt2005.ecschoye.oving5.service;
 
-import edu.ntnu.idatt2005.ecschoye.oving4.model.Equation;
+import edu.ntnu.idatt2005.ecschoye.oving5.model.Equation;
 import org.springframework.stereotype.Service;
 
 import java.util.logging.Logger;

@@ -1,7 +1,7 @@
-package edu.ntnu.idatt2005.ecschoye.oving4.controller;
+package edu.ntnu.idatt2005.ecschoye.oving5.controller;
 
-import edu.ntnu.idatt2005.ecschoye.oving4.model.Equation;
-import edu.ntnu.idatt2005.ecschoye.oving4.service.CalculatorService;
+import edu.ntnu.idatt2005.ecschoye.oving5.model.Equation;
+import edu.ntnu.idatt2005.ecschoye.oving5.service.CalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

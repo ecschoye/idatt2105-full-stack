@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2005.ecschoye.oving4.model;
+package edu.ntnu.idatt2005.ecschoye.oving5.model;
 
 public class Equation {
     private double operand1;

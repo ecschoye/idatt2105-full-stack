@@ -32,7 +32,7 @@
     </div>
   </div>
   <div v-if="showLog" class="log-container">
-    <h2 class="text-xl">Calculation Log</h2>
+    <h2 class="text-2xl mt-5">Calculation Log</h2>
     <div class="log">
       <p
         v-for="(result, index) in resultLog.slice(-10)"
