@@ -32,7 +32,7 @@
     </div>
   </div>
   <div v-if="showLog" class="log-container">
-    <h2>Calculation Log</h2>
+    <h2 class="text-xl">Calculation Log</h2>
     <div class="log">
       <p
         v-for="(result, index) in resultLog.slice(-10)"
@@ -121,6 +121,9 @@ export default {
     handleSquareRoot() {
       if (this.calculatorValue === "") {
         this.calculatorValue = "";
+      }
+      if (this.calculatorValue < 0) {
+        return;
       }
       this.calculatorValue = Math.sqrt(this.calculatorValue).toFixed(2) + "";
     },
