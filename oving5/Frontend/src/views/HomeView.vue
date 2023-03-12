@@ -15,7 +15,7 @@ h1 {
 .home {
   padding-top: 20px;
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 25px;
   background-color: #dfbf9f;
   max-width: 550px;
   max-height: 200px;
