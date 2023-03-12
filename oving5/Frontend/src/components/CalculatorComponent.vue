@@ -1,16 +1,23 @@
 <template>
-  <div class="calculator-container bg-black rounded w-1/3 mx-auto mt-20">
-    <div class="calculator">
-      <div class="title">
-        <h1>Calculator</h1>
+  <div
+    class="bg-title title-color h-16 rounded-xl text-white font-bold text-2xl mx-auto mt-20 w-2/5 text-center pt-4"
+  >
+    <p>Calculator</p>
+  </div>
+  <div
+    class="bg-black rounded-lg w-2/5 mx-auto mt-5 min-w-[400px] max-w-[600px] min-h-[500px] max-h-[700px]"
+  >
+    <div class="calculator w-11/12 mx-auto mt-30">
+      <div
+        class="bg-gray-700 h-24 rounded-xl w-100 mx-auto mt-5 mb-5 text-right pt-6"
+        id="result"
+      >
+        <p class="text-white text-4xl mt-1 pr-10">{{ calculatorValue || 0 }}</p>
       </div>
-      <div class="display bg-gray-700 h-20 rounded-lg w-100" id="result">
-        {{ calculatorValue || 0 }}
-      </div>
-      <div class="buttons">
-        <div class="row" v-for="n in calculatorElements" v-bind:key="n">
+      <div class="buttons mb-5">
+        <div class="" v-for="n in calculatorElements" v-bind:key="n">
           <div
-            class="text-white bg-vue-dark button bold"
+            class="text-white bg-vue-dark button bold rounded-lg w-30 h-16 mx-auto text-center align-bottom pt-5"
             :class="{
               'bg-vue-orange': ['/', '*', '-', '+', '='].includes(n.value),
               'bg-vue-gray text-black': ['AC', '+/-', '%'].includes(n.value),
@@ -86,12 +93,14 @@ export default {
         this.calculatorValue = 0;
       } else if (n === "." && this.calculatorValue.includes(".")) {
         return;
+      } else if (this.calculatorValue === "0") {
+        this.calculatorValue = n + "";
       } else {
         this.calculatorValue += n + "";
       }
     },
     handleAc() {
-      this.calculatorValue = "";
+      this.calculatorValue = "0";
       this.prevCalculatorValue = "";
     },
     handlePercent() {
@@ -107,12 +116,18 @@ export default {
     handleOperator(n) {
       this.operator = n;
       this.prevCalculatorValue = this.calculatorValue;
-      this.calculatorValue = "";
+      this.calculatorValue = "0";
     },
     handleSquareRoot() {
+      if (this.calculatorValue === "") {
+        this.calculatorValue = "";
+      }
       this.calculatorValue = Math.sqrt(this.calculatorValue).toFixed(2) + "";
     },
     handleEqual() {
+      if (this.operator === null || this.prevCalculatorValue === "") {
+        return;
+      }
       const equation = {
         operand1: this.prevCalculatorValue,
         operator: this.operator,
@@ -207,6 +222,7 @@ export default {
   font-size: 30px;
 }
 */
+
 .buttons {
   grid-area: buttons;
   display: grid;
@@ -215,12 +231,14 @@ export default {
   gap: 5px 5px;
 }
 
+/*
 .button {
   width: 100%;
   height: 35px;
   border-radius: 10px;
   padding-top: 15px;
 }
+*/
 
 .buttons .button {
   border-radius: 10px;
@@ -234,6 +252,13 @@ export default {
   color: black;
 }
 
+.title-color {
+  color: #9f7245;
+}
+
+.bg-title {
+  background-color: #dfbf9f;
+}
 .bg-vue-orange {
   background-color: orange;
 }
