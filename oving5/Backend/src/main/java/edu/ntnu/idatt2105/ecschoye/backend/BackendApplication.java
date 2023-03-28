@@ -1,13 +1,13 @@
-package edu.ntnu.idatt2005.ecschoye.oving5;
+package edu.ntnu.idatt2105.ecschoye.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Oving5Application {
+public class BackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Oving5Application.class, args);
+		SpringApplication.run(BackendApplication.class, args);
 	}
-
 }
+

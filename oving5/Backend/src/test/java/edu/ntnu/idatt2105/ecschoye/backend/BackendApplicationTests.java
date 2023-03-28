@@ -1,10 +1,10 @@
-package edu.ntnu.idatt2005.ecschoye.oving5;
+package edu.ntnu.idatt2105.ecschoye.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Oving4ApplicationTests {
+class BackendApplicationTests {
 
 	@Test
 	void contextLoads() {
