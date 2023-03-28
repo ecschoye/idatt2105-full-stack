@@ -39,6 +39,7 @@
         :key="index"
         :id="'log-item-' + index"
         class="log-item"
+        @click="setCalculatorValue(log)"
       >
         <span class="log-index">{{ index + 1 }}. </span>{{ log }}
       </p>
@@ -268,6 +269,12 @@ export default {
       console.log(equations);
       this.resultLog = equations;
     },
+    setCalculatorValue(value) {
+      console.log("setCalculatorValue");
+      console.log(value);
+      const result = value.split("=")[1].trim(); // extract the value after the '=' sign
+      this.calculatorValue = result;
+    },
 
     action(n) {
       if (!isNaN(n) || n === ".") {
@@ -427,7 +434,7 @@ h2 {
   align-items: center;
   overflow-y: scroll;
   overflow-x: hidden;
-  max-height: 200px;
+  max-height: fit-content;
 }
 
 .log p {

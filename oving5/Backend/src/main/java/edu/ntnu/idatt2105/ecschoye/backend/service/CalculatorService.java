@@ -114,13 +114,17 @@ public class CalculatorService {
     }
 
     public List<String> getEquations(String username) {
-        List<Equation> equations = equationRepository.findAll();
-        Map<String, Integer> userCounts = new HashMap<>();
-        return equations.stream()
-                .filter(p -> p.getUser().getUsername().equals(username))
-                .filter(p -> userCounts.merge(username, 1, Integer::sum) <= 10)
-                .map(Equation::getEquation)
-                .collect(Collectors.toList());
+        List<Equation> equations = equationRepository.findAllByUserUsernameOrderByEquationDesc(username);
+        List<String> equationStrings = new ArrayList<>();
+        int count = 0;
+        for (Equation equation : equations) {
+            if (count >= 10) {
+                break;
+            }
+            equationStrings.add(equation.getEquation());
+            count++;
+        }
+        return equationStrings;
     }
 
 

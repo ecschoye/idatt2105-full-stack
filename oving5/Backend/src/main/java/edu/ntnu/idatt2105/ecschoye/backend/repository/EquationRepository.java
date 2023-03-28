@@ -8,4 +8,6 @@ import java.util.List;
 public interface EquationRepository extends JpaRepository<Equation, Long> {
     List<Equation> findAllByUser_Username(String username);
 
+    List<Equation> findAllByUserUsernameOrderByEquationDesc(String username);
+
 }
