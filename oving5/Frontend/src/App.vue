@@ -5,12 +5,13 @@
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/calculator">Calculator</router-link></li>
         <li><router-link to="/contact">Contact</router-link></li>
-        <li>Login</li>
       </ul>
     </nav>
     <router-view />
   </body>
 </template>
+
+<script></script>
 
 <style>
 body {

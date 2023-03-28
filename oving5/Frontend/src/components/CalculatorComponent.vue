@@ -31,16 +31,16 @@
       </div>
     </div>
   </div>
-  <div v-if="showLog" class="log-container">
+  <div v-if="resultLog.length > 0" class="log-container">
     <h2 class="text-2xl mt-5">Calculation Log</h2>
     <div class="log">
       <p
-        v-for="(result, index) in resultLog.slice(-10)"
+        v-for="(log, index) in resultLog.slice(-10)"
         :key="index"
         :id="'log-item-' + index"
         class="log-item"
       >
-        <span class="log-index">{{ index + 1 }}. </span>{{ result }}
+        <span class="log-index">{{ index + 1 }}. </span>{{ log }}
       </p>
     </div>
   </div>
@@ -48,10 +48,76 @@
 
 <script>
 import axios from "axios";
+import { useTokenStore } from "@/store/token";
+
 export default {
   name: "CalculatorComponent",
   props: {
     msg: String,
+  },
+  setup() {
+    console.log("CalculatorComponent setup");
+    const tokenStore = useTokenStore();
+
+    function updateToken() {
+      console.log("Updating token");
+      console.log(tokenStore.loggedInUser.username);
+      console.log(tokenStore.loggedInUser.password);
+      tokenStore
+        .getTokenAndSaveInStore(
+          tokenStore.loggedInUser.username,
+          tokenStore.loggedInUser.password
+        )
+        .then((token) => {
+          console.log("Token updated");
+          console.log(token);
+        });
+    }
+    updateToken();
+
+    setInterval(() => {
+      updateToken();
+      console.log("Token refreshed");
+    }, 1000 * 60 * 5);
+
+    return { tokenStore };
+  },
+  async mounted() {
+    if (!this.tokenStore.jwtToken) {
+      console.log("Unauthenticated context");
+    } else {
+      console.log("Authenticated context");
+    }
+  },
+  async created() {
+    const equation = {
+      operand1: this.prevCalculatorValue,
+      operator: this.operator,
+      operand2: this.calculatorValue,
+      equation: "",
+      result: "",
+      user: {
+        username: this.tokenStore.loggedInUser.username,
+        password: "",
+      },
+    };
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + this.tokenStore.jwtToken,
+      },
+    };
+
+    const equations = await (
+      await axios.post(
+        "http://localhost:8080/calculator/getCalculations",
+        equation,
+        config
+      )
+    ).data;
+    console.log(equations);
+    this.resultLog = equations;
   },
   data() {
     return {
@@ -84,7 +150,7 @@ export default {
       resultLog: [],
       showLog: false,
       calculationLog: [],
-      backendUrl: "http://localhost:8080/api/calculate",
+      backendUrl: "http://localhost:8080/calculate",
     };
   },
   methods: {
@@ -127,29 +193,80 @@ export default {
       }
       this.calculatorValue = Math.sqrt(this.calculatorValue).toFixed(2) + "";
     },
-    handleEqual() {
+    async handleEqual() {
       if (this.operator === null || this.prevCalculatorValue === "") {
         return;
       }
+      await this.calculate();
+      await this.getLog();
+    },
+
+    async calculate() {
+      console.log("calculate function");
+      console.log(this.tokenStore.loggedInUser.username);
       const equation = {
         operand1: this.prevCalculatorValue,
         operator: this.operator,
         operand2: this.calculatorValue,
+        equation: "",
+        result: "",
+        user: {
+          username: this.tokenStore.loggedInUser.username,
+          password: "",
+          equations: [],
+        },
       };
-      axios
-        .post(this.backendUrl, equation)
-        .then((response) => {
-          console.log(response.data);
-          const calculation = `${equation.operand1} ${equation.operator} ${equation.operand2} = ${response.data}`;
-          this.resultLog.push(calculation);
-          this.calculatorValue = response.data;
-          this.prevCalculatorValue = "";
-          this.operator = null;
-          this.showLog = true;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      console.log("before axios");
+      console.log(equation);
+      console.log("-----------------");
+      console.log(this.tokenStore.jwtToken);
+
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + this.tokenStore.jwtToken,
+        },
+      };
+
+      console.log(equation);
+      console.log(config);
+      this.calculatorValue = await (
+        await axios.post(
+          "http://localhost:8080/calculator/calculate",
+          equation,
+          config
+        )
+      ).data;
+    },
+    async getLog() {
+      const equation = {
+        operand1: this.prevCalculatorValue,
+        operator: this.operator,
+        operand2: this.calculatorValue,
+        equation: "",
+        result: "",
+        user: {
+          username: this.tokenStore.loggedInUser.username,
+          password: "",
+        },
+      };
+
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + this.tokenStore.jwtToken,
+        },
+      };
+
+      const equations = await (
+        await axios.post(
+          "http://localhost:8080/calculator/getCalculations",
+          equation,
+          config
+        )
+      ).data;
+      console.log(equations);
+      this.resultLog = equations;
     },
 
     action(n) {
