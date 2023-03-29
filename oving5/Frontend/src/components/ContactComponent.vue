@@ -1,4 +1,5 @@
 <template>
+  <Navbar />
   <div class="form-container">
     <div class="title">
       <h2>Form</h2>
@@ -61,6 +62,7 @@
 
 <script>
 import axios from "axios";
+import Navbar from "./NavbarComponent.vue";
 
 var validEmailRegex =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{1,})$/;
@@ -77,6 +79,9 @@ export default {
       success: false,
       successText: "Success!",
     };
+  },
+  components: {
+    Navbar,
   },
   methods: {
     getData() {

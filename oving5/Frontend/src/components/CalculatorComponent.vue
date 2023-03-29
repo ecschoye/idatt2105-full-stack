@@ -1,4 +1,5 @@
 <template>
+  <Navbar />
   <div class="h-screen">
     <div class="max-w-screen-lg mx-auto px-4 py-8">
       <p class="text-center text-3xl font-bold mb-4">Calculator</p>
@@ -59,8 +60,10 @@
 <script>
 import axios from "axios";
 import { useTokenStore } from "@/store/token";
+import Navbar from "./NavbarComponent.vue";
 
 export default {
+  components: { Navbar },
   name: "CalculatorComponent",
   props: {
     msg: String,

@@ -1,4 +1,7 @@
 <template>
+  <template v-if="user">
+    <Navbar />
+  </template>
   <div class="home">
     <h1>Welcome to the home page of Edvard's IDATT2105 exercise</h1>
   </div>
@@ -6,10 +9,20 @@
     <p v-if="user" id="login-success">Hello {{ this.username }}</p>
     <div v-if="!user" class="login-section">
       <div id="username">
-        <input type="text" v-model="username" placeholder="Username" />
+        <input
+          class="pl-3"
+          type="text"
+          v-model="username"
+          placeholder="Username"
+        />
       </div>
       <div id="password">
-        <input type="password" v-model="password" placeholder="Password" />
+        <input
+          class="pl-3"
+          type="password"
+          v-model="password"
+          placeholder="Password"
+        />
       </div>
       <div id="login">
         <button @click="login()">Login</button>
@@ -20,7 +33,7 @@
       <p id="error">
         {{ error }}
       </p>
-      <p id="loginInfo">
+      <p class="pl-3" id="loginInfo">
         {{ loginInfo }}
       </p>
     </div>
@@ -34,11 +47,15 @@
 import axios from "axios";
 import { useTokenStore } from "@/store/token";
 import { getUserInfo } from "/httputils.js";
+import Navbar from "./NavbarComponent.vue";
 
 export default {
   name: "HomeComponent",
   props: {
     msg: String,
+  },
+  components: {
+    Navbar,
   },
   setup() {
     const tokenStore = useTokenStore();
@@ -137,14 +154,15 @@ export default {
 }
 
 .main {
-  padding-top: px;
+  padding-top: 20px;
   font-family: "Courier New", Courier, monospace;
   font-size: 25px;
+  font-weight: bold;
   background-color: #dfbf9f;
   max-width: 550px;
   width: 400px;
   max-height: fit-content;
-  margin: 20px auto;
+  margin: 10px auto;
   border-radius: 10px;
 }
 
