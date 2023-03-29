@@ -10,4 +10,7 @@ public interface EquationRepository extends JpaRepository<Equation, Long> {
 
     List<Equation> findAllByUserUsernameOrderByEquationDesc(String username);
 
+    List<Equation> findAllByUserUsernameOrderByIdDesc(String username);
+
+
 }

@@ -1,48 +1,57 @@
 <template>
-  <div
-    class="bg-title title-color h-16 rounded-xl text-white font-bold text-2xl mx-auto mt-20 w-2/5 text-center pt-4"
-  >
-    <p>Calculator</p>
-  </div>
-  <div
-    class="bg-black rounded-lg w-2/5 mx-auto mt-5 min-w-[400px] max-w-[600px] min-h-[500px] max-h-[700px]"
-  >
-    <div class="calculator w-11/12 mx-auto mt-30">
-      <div
-        class="bg-gray-700 h-24 rounded-xl w-100 mx-auto mt-5 mb-5 text-right pt-6"
-        id="result"
-      >
-        <p class="text-white text-4xl mt-1 pr-10">{{ calculatorValue || 0 }}</p>
-      </div>
-      <div class="buttons mb-5">
-        <div class="" v-for="n in calculatorElements" v-bind:key="n">
-          <div
-            class="text-white bg-vue-dark button bold rounded-lg w-30 h-16 mx-auto text-center align-bottom pt-5"
-            :class="{
-              'bg-vue-orange': ['/', '*', '-', '+', '='].includes(n.value),
-              'bg-vue-gray text-black': ['AC', '+/-', '%'].includes(n.value),
-            }"
-            @click="action(n.value)"
-            :id="`button-${n.name}`"
-          >
-            {{ n.value }}
+  <div class="h-screen">
+    <div class="max-w-screen-lg mx-auto px-4 py-8">
+      <p class="text-center text-3xl font-bold mb-4">Calculator</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-10">
+        <div class="bg-black rounded-xl p-8">
+          <div class="calculator-background">
+            <div class="calculator mx-auto">
+              <div
+                class="bg-gray-700 h-24 rounded-xl w-100 mx-auto mb-5 text-right pt-6"
+              >
+                <p class="text-white text-4xl mt-1 pr-10">
+                  {{ calculatorValue || 0 }}
+                </p>
+              </div>
+              <div class="buttons mb-5">
+                <div class="" v-for="n in calculatorElements" v-bind:key="n">
+                  <div
+                    class="text-white bg-vue-dark button bold rounded-lg w-30 h-16 mx-auto text-center align-bottom pt-5"
+                    :class="{
+                      'bg-vue-orange': ['/', '*', '-', '+', '='].includes(
+                        n.value
+                      ),
+                      'bg-vue-gray text-black': ['AC', '+/-', '%'].includes(
+                        n.value
+                      ),
+                    }"
+                    @click="action(n.value)"
+                    :id="`button-${n.name}`"
+                  >
+                    {{ n.value }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-xl p-8">
+          <h2 class="text-2xl font-bold text-center mb-4">Calculation Log</h2>
+          <div class="log-container">
+            <div class="log mb-5">
+              <p
+                v-for="(log, index) in resultLog.slice(-10)"
+                :key="index"
+                :id="'log-item-' + index"
+                class="log-item hover:bg-blue-100 rounded opacity-60 cursor-pointer"
+                @click="setCalculatorValue(log)"
+              >
+                <span class="log-index">{{ index + 1 }}. </span>{{ log }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div v-if="resultLog.length > 0" class="log-container">
-    <h2 class="text-2xl mt-5">Calculation Log</h2>
-    <div class="log">
-      <p
-        v-for="(log, index) in resultLog.slice(-10)"
-        :key="index"
-        :id="'log-item-' + index"
-        class="log-item"
-        @click="setCalculatorValue(log)"
-      >
-        <span class="log-index">{{ index + 1 }}. </span>{{ log }}
-      </p>
     </div>
   </div>
 </template>
@@ -118,7 +127,7 @@ export default {
       )
     ).data;
     console.log(equations);
-    this.resultLog = equations;
+    this.resultLog = this.setResultToFixedTwoDecimals(equations);
   },
   data() {
     return {
@@ -160,7 +169,10 @@ export default {
         this.calculatorValue = 0;
       } else if (n === "." && this.calculatorValue.includes(".")) {
         return;
-      } else if (this.calculatorValue === "0") {
+      } else if (
+        this.calculatorValue === "0" ||
+        this.calculatorValue === "0.00"
+      ) {
         this.calculatorValue = n + "";
       } else {
         this.calculatorValue += n + "";
@@ -232,12 +244,14 @@ export default {
       console.log(equation);
       console.log(config);
       this.calculatorValue = await (
-        await axios.post(
-          "http://localhost:8080/calculator/calculate",
-          equation,
-          config
-        )
-      ).data;
+        await axios
+          .post("http://localhost:8080/calculator/calculate", equation, config)
+          .catch((error) => {
+            console.log(error);
+          })
+      ).data.toFixed(2);
+      console.log("after axios");
+      console.log(this.calculatorValue);
     },
     async getLog() {
       const equation = {
@@ -266,14 +280,28 @@ export default {
           config
         )
       ).data;
+      console.log("equations");
       console.log(equations);
-      this.resultLog = equations;
+      this.resultLog = this.setResultToFixedTwoDecimals(equations);
     },
     setCalculatorValue(value) {
       console.log("setCalculatorValue");
       console.log(value);
       const result = value.split("=")[1].trim(); // extract the value after the '=' sign
       this.calculatorValue = result;
+    },
+
+    setResultToFixedTwoDecimals(equations) {
+      console.log("setResultToFixedTwoDecimals");
+      console.log(equations);
+      const resultEquations = equations.map((equation) => {
+        const result = Number.parseFloat(equation.split("=")[1].trim()).toFixed(
+          2
+        );
+        return `${equation.split("=")[0].trim()} = ${result}`;
+      });
+      console.log(resultEquations);
+      return resultEquations;
     },
 
     action(n) {
@@ -409,7 +437,7 @@ export default {
 }
 
 .log-container {
-  margin-top: 25px;
+  margin-top: 10px;
   text-align: center;
   padding: 0 20px;
 }

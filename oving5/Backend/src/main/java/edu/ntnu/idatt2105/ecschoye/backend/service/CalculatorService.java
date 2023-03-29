@@ -114,18 +114,26 @@ public class CalculatorService {
     }
 
     public List<String> getEquations(String username) {
-        List<Equation> equations = equationRepository.findAllByUserUsernameOrderByEquationDesc(username);
+        List<Equation> equations = equationRepository.findAllByUserUsernameOrderByIdDesc(username);
         List<String> equationStrings = new ArrayList<>();
+        Set<String> addedEquations = new HashSet<>();
         int count = 0;
         for (Equation equation : equations) {
             if (count >= 10) {
                 break;
             }
-            equationStrings.add(equation.getEquation());
-            count++;
+            String equationString = equation.getEquation();
+            if (!addedEquations.contains(equationString)) {
+                equationStrings.add(equationString);
+                addedEquations.add(equationString);
+                count++;
+            }
         }
+        logger.info("Returning " + equationStrings.size() + " equations for user " + username);
+        logger.info("Equations: " + equationStrings);
         return equationStrings;
     }
+
 
 
     @Override

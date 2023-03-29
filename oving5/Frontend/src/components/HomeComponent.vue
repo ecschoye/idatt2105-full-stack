@@ -143,7 +143,7 @@ export default {
   background-color: #dfbf9f;
   max-width: 550px;
   width: 400px;
-  max-height: 200px;
+  max-height: fit-content;
   margin: 20px auto;
   border-radius: 10px;
 }
